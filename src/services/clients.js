@@ -1,4 +1,4 @@
-import { Client } from '../db/models/client.js';
+import { Client } from '../db/models/clients.js';
 
 export const getAllClients = async () => {
   return await Client.find({});
