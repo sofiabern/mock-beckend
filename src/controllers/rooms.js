@@ -1,21 +1,40 @@
-import { getAllRooms, getRoomById } from "../services/rooms.js";
+import { getAllRooms, getRoomById, updateRoom } from '../services/rooms.js';
 
 export const getAllRoomsController = async (req, res) => {
-    const rooms = await getAllRooms();
-    res.json({
-      status: 200,
-      message: 'Successfully got all rooms!',
-      data: rooms,
-    });
-  };
+  const rooms = await getAllRooms();
+  res.json({
+    status: 200,
+    message: 'Successfully got all rooms!',
+    data: rooms,
+  });
+};
 
-  export const getRoomByIdController = async (req, res) => {
-    const id = req.params.roomId;
-    const room = await getRoomById(id);
+export const getRoomByIdController = async (req, res) => {
+  const id = req.params.roomId;
+  const room = await getRoomById(id);
 
-    res.json({
-      status: 200,
-      message: `Successfully got room with id ${id}!`,
-      data: room,
+  res.json({
+    status: 200,
+    message: `Successfully got room with id ${id}!`,
+    data: room,
+  });
+};
+
+export const updateRoomController = async (req, res) => {
+  const id = req.params.roomId;
+  const updateData = req.body;
+  const room = await updateRoom(id, updateData);
+
+  if (!room) {
+    return res.status(404).json({
+      status: 404,
+      message: 'Room not found',
     });
-  };
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated room with id ${id}!`,
+    data: room,
+  });
+};

@@ -7,3 +7,8 @@ export const getAllRooms = async () => {
 export const getRoomById = async (id) => {
     return await Room.findById(id);
 };
+
+export const updateRoom = async (id,  updateData) =>{
+  return await Room.findByIdAndUpdate(id, updateData, { new: true });
+};
+
