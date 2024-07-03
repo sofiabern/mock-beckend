@@ -7,3 +7,7 @@ export const getAllClients = async () => {
 export const getClientById = async (id) => {
     return await Client.findById(id);
 };
+
+export const createClient = async (client) => {
+  return await Client.create(client);
+};

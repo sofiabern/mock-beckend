@@ -8,11 +8,13 @@ import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js'
 import { notFoundMiddleware } from './middlewares/notFoundMiddleware.js';
 
 import { roomsRouter } from './routers/rooms.js';
-import { clientsRoouter } from './routers/clients.js';
+import { clientsRouter } from './routers/clients.js';
 import { checkInsRouter } from './routers/check-ins.js';
 
 export const startServer = () => {
   const app = express();
+
+  app.use(express.json());
 
   app.use(cors());
 
@@ -20,10 +22,14 @@ export const startServer = () => {
   app.use(roomsRouter);
 
   // Clients
-  app.use(clientsRoouter);
+  app.use(clientsRouter);
 
   // Check-ins
   app.use(checkInsRouter);
+
+//   app.post('/clients-test', (req, res) =>{
+// res.send("hello");
+//   });
 
   app.use(notFoundMiddleware);
 
