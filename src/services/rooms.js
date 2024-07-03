@@ -1,7 +1,7 @@
 import { Room } from '../db/models/rooms.js';
 
 export const getAllRooms = async () => {
-  return await Room.find({});
+  return await Room.find({isAvailable: true});
 };
 
 export const getRoomById = async (id) => {

@@ -1,7 +1,7 @@
 import { startServer } from './server.js';
-import { initMongoCOnnection } from './db/initMongoConnection.js';
+import { initMongoConnection } from './db/initMongoConnection.js';
 
 (async () => {
-  await initMongoCOnnection();
+  await initMongoConnection();
   startServer();
 })();

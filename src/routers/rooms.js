@@ -1,0 +1,14 @@
+import { Router } from 'express';
+
+import {
+  getAllRoomsController,
+  getRoomByIdController,
+} from '../controllers/rooms.js';
+
+import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
+
+export const roomsRouter = Router();
+
+roomsRouter.get('/rooms', ctrlWrapper(getAllRoomsController) );
+
+roomsRouter.get('/rooms/:roomId', ctrlWrapper(getRoomByIdController));
