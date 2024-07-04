@@ -3,7 +3,6 @@
 import { Schema, model } from 'mongoose';
 
 const roomSchema = new Schema({
-    _id: Schema.Types.ObjectId,
     room_number: { type: Number, required: true },
     capacity: { type: Number, required: true },
     comfort_level: { type: String, enum: ['Standard', 'Semi-Lux', 'Lux'], required: true },
