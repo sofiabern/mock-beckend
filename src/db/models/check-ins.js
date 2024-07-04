@@ -7,7 +7,7 @@ const checkInSchema = new Schema(
     room: { type: Schema.Types.ObjectId, ref: 'room', required: true },
     check_in_date: { type: Date, required: true },
     check_out_date: { type: Date, required: true },
-    note: { type: String }
+    note: { type: String, default: "No note" }
   },
   { timestamps: false, versionKey: false }
 );
