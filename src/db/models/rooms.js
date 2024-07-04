@@ -11,4 +11,4 @@ const roomSchema = new Schema({
     isAvailable: {type: Boolean, required: true},
   }, { timestamps: false, versionKey: false });
 
-  export const Room = model('rooms', roomSchema);
+  export const Room = model('room', roomSchema);
