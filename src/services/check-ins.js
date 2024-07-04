@@ -13,3 +13,7 @@ export const getCheckInById = async (id) => {
 export const createCheckIn = async (checkIn) => {
   return await CheckIn.create(checkIn);
 };
+
+export const deleteCheckIn = async (id) =>{
+  return await CheckIn.findByIdAndDelete(id);
+};
