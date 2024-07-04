@@ -7,3 +7,7 @@ export const getAllCheckIns = async () => {
 export const getCheckInById = async (id) => {
     return await CheckIn.findById(id);
 };
+
+export const createCheckIn = async (checkIn) => {
+  return await CheckIn.create(checkIn);
+};

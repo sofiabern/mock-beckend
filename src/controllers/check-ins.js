@@ -1,4 +1,4 @@
-import { getAllCheckIns, getCheckInById } from "../services/check-ins.js";
+import { getAllCheckIns, getCheckInById, createCheckIn } from "../services/check-ins.js";
 
 
 export const getAllCheckInsController =  async (req, res) => {
@@ -17,6 +17,17 @@ export const getAllCheckInsController =  async (req, res) => {
     res.json({
       status: 200,
       message: `Successfully got check-in with id ${id}!`,
+      data: checkIn,
+    });
+  };
+
+  export const createCheckInController = async (req, res) => {
+    const { body } = req;
+    const checkIn = await createCheckIn(body);
+
+    res.status(201).json({
+      status: 201,
+      message: `Successfully created check-in!`,
       data: checkIn,
     });
   };
