@@ -1,4 +1,4 @@
-import { getAllRooms, getRoomById, updateRoom } from '../services/rooms.js';
+import { getAllRooms, getRoomById, updateRoom, filterRooms } from '../services/rooms.js';
 
 export const getAllRoomsController = async (req, res) => {
   const rooms = await getAllRooms();
@@ -36,5 +36,17 @@ export const updateRoomController = async (req, res) => {
     status: 200,
     message: `Successfully updated room with id ${id}!`,
     data: room,
+  });
+};
+
+export const filterRoomsController = async (req, res) => {
+  const { check_in_date, check_out_date } = req.body;
+
+  const rooms = await filterRooms(check_in_date, check_out_date);
+
+  res.json({
+    status: 200,
+    message: 'Successfully fetched filtered rooms!',
+    data: rooms,
   });
 };

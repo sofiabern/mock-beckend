@@ -2,11 +2,24 @@
 
 import { Schema, model } from 'mongoose';
 
-const roomSchema = new Schema({
+const BookingSchema = new Schema({
+  check_in_date: { type: Date, required: true },
+  check_out_date: { type: Date, required: true },
+});
+
+const roomSchema = new Schema(
+  {
+    bookings: [BookingSchema],
     room_number: { type: Number, required: true },
     capacity: { type: Number, required: true },
-    comfort_level: { type: String, enum: ['Standard', 'Semi-Lux', 'Lux'], required: true },
+    comfort_level: {
+      type: String,
+      enum: ['Standard', 'Semi-Lux', 'Lux'],
+      required: true,
+    },
     price: { type: Number, required: true },
-  }, { timestamps: false, versionKey: false });
+  },
+  { timestamps: false, versionKey: false },
+);
 
-  export const Room = model('room', roomSchema);
+export const Room = model('room', roomSchema);
