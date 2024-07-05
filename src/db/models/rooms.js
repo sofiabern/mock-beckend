@@ -7,7 +7,6 @@ const roomSchema = new Schema({
     capacity: { type: Number, required: true },
     comfort_level: { type: String, enum: ['Standard', 'Semi-Lux', 'Lux'], required: true },
     price: { type: Number, required: true },
-    isAvailable: {type: Boolean, required: true},
   }, { timestamps: false, versionKey: false });
 
   export const Room = model('room', roomSchema);
