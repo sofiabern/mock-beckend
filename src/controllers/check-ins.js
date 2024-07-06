@@ -6,7 +6,6 @@ import {
 } from '../services/check-ins.js';
 
 import { createClient } from '../services/clients.js';
-import { updateRoom, getRoomById } from '../services/rooms.js';
 
 export const getAllCheckInsController = async (req, res) => {
   const checkIns = await getAllCheckIns();
@@ -63,20 +62,12 @@ export const createCheckInClientController = async (req, res) => {
 
   const checkIn = await createCheckIn(checkInData);
 
-  const targetedRoom = await getRoomById(room);
-  const bookings = targetedRoom.bookings.push({
-    check_in_date,
-    check_out_date,
-  });
-  const updatedRoom = await updateRoom(room, bookings);
-
   res.status(201).json({
     status: 201,
-    message: `Successfully created client with check-in and updated room!`,
+    message: `Successfully created client with check-in!`,
     data: {
-      client,
-      checkIn,
-      updatedRoom
+      client: client,
+      checkIn: checkIn,
     },
   });
 };
