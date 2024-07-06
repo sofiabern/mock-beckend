@@ -9,9 +9,9 @@ const BookingSchema = new Schema({
 
 const roomSchema = new Schema(
   {
-    bookings: [BookingSchema],
     room_number: { type: Number, required: true },
     capacity: { type: Number, required: true },
+    bookings: [BookingSchema],
     comfort_level: {
       type: String,
       enum: ['Standard', 'Semi-Lux', 'Lux'],

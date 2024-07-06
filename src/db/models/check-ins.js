@@ -12,4 +12,4 @@ const checkInSchema = new Schema(
   { timestamps: false, versionKey: false }
 );
 
-export const CheckIn = model('check-ins', checkInSchema);
+export const CheckIn = model('check-in', checkInSchema);
