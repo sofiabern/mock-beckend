@@ -3,8 +3,8 @@
 import { Schema, model } from 'mongoose';
 
 const BookingSchema = new Schema({
-  check_in_date: { type: Date, required: true },
-  check_out_date: { type: Date, required: true },
+  check_in_date: { type: String, required: true },
+  check_out_date: { type: String, required: true },
 });
 
 const roomSchema = new Schema(
