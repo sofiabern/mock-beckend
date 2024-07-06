@@ -3,7 +3,7 @@ import { Router } from 'express';
 import {
   getAllCheckInsController,
   getCheckInByIdController,
-  createCheckInController,
+  createCheckInClientController,
   deleteCheckInController
 } from '../controllers/check-ins.js';
 
@@ -18,6 +18,6 @@ checkInsRouter.get(
   ctrlWrapper(getCheckInByIdController),
 );
 
-checkInsRouter.post('/check-ins', ctrlWrapper(createCheckInController));
+checkInsRouter.post('/check-ins', ctrlWrapper(createCheckInClientController));
 
 checkInsRouter.delete( '/check-ins/:checkInId', ctrlWrapper(deleteCheckInController));

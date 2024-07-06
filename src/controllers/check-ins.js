@@ -27,7 +27,7 @@ export const getCheckInByIdController = async (req, res) => {
   });
 };
 
-export const createCheckInController = async (req, res) => {
+export const createCheckInClientController = async (req, res) => {
 
   const { last_name, first_name, middle_name, passport_details, room, check_in_date, check_out_date, comment, note } = req.body;
 
