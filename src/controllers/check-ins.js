@@ -94,7 +94,7 @@ export const createCheckInClientController = async (req, res) => {
 export const deleteCheckInController = async (req, res) => {
   const id = req.params.checkInId;
 
-  const checkIn = getCheckInById(id);
+  const checkIn = await getCheckInById(id);
   if (!checkIn) {
     return res.status(404).json({ message: 'Check-in not found' });
   }
