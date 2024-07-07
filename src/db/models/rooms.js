@@ -8,7 +8,7 @@ const BookingSchema = new Schema({
 });
 
 
-const Booking = model('booking', BookingSchema);
+export const Booking = model('booking', BookingSchema);
 
 const roomSchema = new Schema(
   {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-export const clientsRouter = Router();
+
 
 import {
   getAllClientsController,
@@ -12,10 +12,13 @@ import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
 import { validateMongoId } from '../middlewares/validateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createClientSchema } from '../validation/clients/createClientSchema.js';
-clientsRouter.use('/clients/:clientId', validateMongoId('clientId'));
 
-clientsRouter.get('/clients', ctrlWrapper(getAllClientsController));
+export const clientsRouter = Router();
 
-clientsRouter.get('/clients/:clientId', ctrlWrapper(getClientByIdController));
+clientsRouter.use('/:clientId', validateMongoId('clientId'));
 
-clientsRouter.post('/clients', validateBody(createClientSchema), ctrlWrapper(createClientController));
+clientsRouter.get('/', ctrlWrapper(getAllClientsController));
+
+clientsRouter.get('/:clientId', ctrlWrapper(getClientByIdController));
+
+clientsRouter.post('/', validateBody(createClientSchema), ctrlWrapper(createClientController));

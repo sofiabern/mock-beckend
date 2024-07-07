@@ -7,20 +7,23 @@ import {
   deleteCheckInController
 } from '../controllers/check-ins.js';
 
-export const checkInsRouter = Router();
+
 
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
 import { validateMongoId } from '../middlewares/validateMongoId.js';
 
-checkInsRouter.use('/check-ins/:checkInId', validateMongoId('checkInId'));
 
-checkInsRouter.get('/check-ins', ctrlWrapper(getAllCheckInsController));
+export const checkInsRouter = Router();
+
+checkInsRouter.use('/:checkInId', validateMongoId('checkInId'));
+
+checkInsRouter.get('/', ctrlWrapper(getAllCheckInsController));
 
 checkInsRouter.get(
-  '/check-ins/:checkInId',
+  '/:checkInId',
   ctrlWrapper(getCheckInByIdController),
 );
 
-checkInsRouter.post('/check-ins', ctrlWrapper(createCheckInClientController));
+checkInsRouter.post('/', ctrlWrapper(createCheckInClientController));
 
-checkInsRouter.delete( '/check-ins/:checkInId', ctrlWrapper(deleteCheckInController));
+checkInsRouter.delete( '/:checkInId', ctrlWrapper(deleteCheckInController));
