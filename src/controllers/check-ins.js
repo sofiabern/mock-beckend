@@ -7,6 +7,8 @@ import {
 
 import { createClient } from '../services/clients.js';
 
+import { getRoomById } from '../services/rooms.js';
+
 export const getAllCheckInsController = async (req, res) => {
   const checkIns = await getAllCheckIns();
   res.json({
@@ -52,12 +54,28 @@ export const createCheckInClientController = async (req, res) => {
 
   const clientId = client._id;
 
+  const roomDocument = await getRoomById(room);
+  if (!roomDocument) {
+    return res.status(404).json({ message: 'Room not found' });
+  }
+
+  const bookingData = {
+    check_in_date,
+    check_out_date
+  };
+
+  roomDocument.bookings.push(bookingData);
+  await roomDocument.save();
+  const bookingId = roomDocument.bookings[roomDocument.bookings.length - 1]._id;
+
+
   const checkInData = {
     room,
     client: clientId,
     check_in_date,
     check_out_date,
     note,
+    booking: bookingId,
   };
 
   const checkIn = await createCheckIn(checkInData);

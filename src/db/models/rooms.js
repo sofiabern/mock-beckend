@@ -1,11 +1,14 @@
 // Номери (Номер, Кількість осіб, Комфортність, Ціна).
+import { Schema, model} from 'mongoose';
 
-import { Schema, model } from 'mongoose';
 
 const BookingSchema = new Schema({
   check_in_date: { type: String, required: true },
   check_out_date: { type: String, required: true },
 });
+
+
+const Booking = model('booking', BookingSchema);
 
 const roomSchema = new Schema(
   {
@@ -22,4 +25,4 @@ const roomSchema = new Schema(
   { timestamps: false, versionKey: false },
 );
 
-export const Room = model('room', roomSchema);
+export const Room = model('Room', roomSchema);

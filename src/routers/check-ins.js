@@ -10,6 +10,9 @@ import {
 export const checkInsRouter = Router();
 
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
+import { validateMongoId } from '../middlewares/validateMongoId.js';
+
+checkInsRouter.use('/check-ins/:checkInId', validateMongoId('checkInId'));
 
 checkInsRouter.get('/check-ins', ctrlWrapper(getAllCheckInsController));
 
