@@ -1,6 +1,7 @@
 import { CheckIn } from '../db/models/check-ins.js';
 
 export const getAllCheckIns = async () => {
+
   return await CheckIn.find({})
     .populate('client', 'first_name middle_name last_name')
     .populate('room', 'room_number');
