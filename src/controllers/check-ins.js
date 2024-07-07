@@ -9,6 +9,8 @@ import { createClient } from '../services/clients.js';
 
 import { getRoomById } from '../services/rooms.js';
 
+import { removeBookingFromRoom } from '../services/rooms.js';
+
 export const getAllCheckInsController = async (req, res) => {
   const checkIns = await getAllCheckIns();
   res.json({
@@ -61,13 +63,12 @@ export const createCheckInClientController = async (req, res) => {
 
   const bookingData = {
     check_in_date,
-    check_out_date
+    check_out_date,
   };
 
   roomDocument.bookings.push(bookingData);
   await roomDocument.save();
   const bookingId = roomDocument.bookings[roomDocument.bookings.length - 1]._id;
-
 
   const checkInData = {
     room,
@@ -92,9 +93,18 @@ export const createCheckInClientController = async (req, res) => {
 
 export const deleteCheckInController = async (req, res) => {
   const id = req.params.checkInId;
+
+  const checkIn = getCheckInById(id);
+  if (!checkIn) {
+    return res.status(404).json({ message: 'Check-in not found' });
+  }
+
+  await removeBookingFromRoom(checkIn.room, checkIn.booking);
+
   await deleteCheckIn(id);
+
   res.status(200).json({
     status: 200,
-    message: 'Successfully deleted check-in!',
+    message: 'Successfully deleted check-in and booking!',
   });
 };

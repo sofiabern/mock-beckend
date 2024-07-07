@@ -38,4 +38,3 @@ export const updateRoomController = async (req, res) => {
     data: room,
   });
 };
-

@@ -25,4 +25,4 @@ const roomSchema = new Schema(
   { timestamps: false, versionKey: false },
 );
 
-export const Room = model('Room', roomSchema);
+export const Room = model('room', roomSchema);
