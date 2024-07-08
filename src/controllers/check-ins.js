@@ -59,12 +59,10 @@ export const createCheckInClientController = async (req, res) => {
 
 
   if (existingClient) {
-    if (isCheckIn) {
       existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
       await updateClient(existingClient._id, {
         visitsAmount: existingClient.visitsAmount,
       });
-    }
 
     return res.status(200).json({
       status: 200,
