@@ -17,6 +17,6 @@ roomsRouter.use('/:roomId', validateMongoId('roomId'));
 
 roomsRouter.get('/', ctrlWrapper(getAllRoomsController) );
 
-roomsRouter.get('/:roomId', ctrlWrapper(getRoomByIdController));
+roomsRouter.get('/:roomId', validateMongoId('roomId'), ctrlWrapper(getRoomByIdController));
 
-roomsRouter.patch('/:roomId', validateBody(updateRoomSchema), ctrlWrapper(updateRoomController));
+roomsRouter.patch('/:roomId', validateMongoId('roomId'), validateBody(updateRoomSchema), ctrlWrapper(updateRoomController));

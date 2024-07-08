@@ -1,4 +1,6 @@
 import { getAllRooms, getRoomById, updateRoom } from '../services/rooms.js';
+import createHttpError from 'http-errors';
+
 
 export const getAllRoomsController = async (req, res) => {
   const rooms = await getAllRooms();
@@ -26,10 +28,8 @@ export const updateRoomController = async (req, res) => {
   const room = await updateRoom(id, updateData);
 
   if (!room) {
-    return res.status(404).json({
-      status: 404,
-      message: 'Room not found',
-    });
+    throw createHttpError(404, 'Room not found');
+
   }
 
   res.status(200).json({

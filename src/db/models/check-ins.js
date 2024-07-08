@@ -5,8 +5,8 @@ const checkInSchema = new Schema(
   {
     client: { type: Schema.Types.ObjectId, ref: 'client', required: true },
     room: { type: Schema.Types.ObjectId, ref: 'room', required: true },
-    check_in_date: { type: Date, required: true },
-    check_out_date: { type: Date, required: true },
+    check_in_date: { type: String, required: true },
+    check_out_date: { type: String, required: true },
     note: { type: String },
     booking: { type: Schema.Types.ObjectId, ref: 'booking', required: true }
   },

@@ -1,4 +1,5 @@
 import { Room } from '../db/models/rooms.js';
+import createHttpError from 'http-errors';
 
 export const getAllRooms = async () => {
   return await Room.find();
@@ -15,7 +16,8 @@ export const updateRoom = async (id,  updateData) =>{
 export const removeBookingFromRoom = async (roomId, bookingId) => {
   const room = await Room.findById(roomId);
   if (!room) {
-    throw new Error('Room not found');
+    throw createHttpError(404, 'Room not found');
+
   }
 
   room.bookings = room.bookings.filter(booking => booking._id.toString() !== bookingId.toString());

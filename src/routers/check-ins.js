@@ -20,10 +20,10 @@ checkInsRouter.use('/:checkInId', validateMongoId('checkInId'));
 checkInsRouter.get('/', ctrlWrapper(getAllCheckInsController));
 
 checkInsRouter.get(
-  '/:checkInId',
+  '/:checkInId', validateMongoId('checkInId'),
   ctrlWrapper(getCheckInByIdController),
 );
 
 checkInsRouter.post('/', ctrlWrapper(createCheckInClientController));
 
-checkInsRouter.delete( '/:checkInId', ctrlWrapper(deleteCheckInController));
+checkInsRouter.delete( '/:checkInId', validateMongoId('checkInId'), ctrlWrapper(deleteCheckInController));

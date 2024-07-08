@@ -11,6 +11,8 @@ import { getRoomById } from '../services/rooms.js';
 
 import { removeBookingFromRoom } from '../services/rooms.js';
 
+import createHttpError from 'http-errors';
+
 export const getAllCheckInsController = async (req, res) => {
   const checkIns = await getAllCheckIns();
   res.json({
@@ -58,7 +60,7 @@ export const createCheckInClientController = async (req, res) => {
 
   const roomDocument = await getRoomById(room);
   if (!roomDocument) {
-    return res.status(404).json({ message: 'Room not found' });
+    throw createHttpError(404, 'Room not found');
   }
 
   const bookingData = {
@@ -96,7 +98,7 @@ export const deleteCheckInController = async (req, res) => {
 
   const checkIn = await getCheckInById(id);
   if (!checkIn) {
-    return res.status(404).json({ message: 'Check-in not found' });
+    throw createHttpError(404, 'Check-in not found');
   }
 
   await removeBookingFromRoom(checkIn.room, checkIn.booking);
