@@ -8,6 +8,7 @@ const clientSchema = new Schema({
     middle_name: { type: String },
     passport_details: { type: String, required: true },
     comment: { type: String },
+    visitsAmount: {type: Number, required: true, default: 0}
   },
   { timestamps: false, versionKey: false },
 );

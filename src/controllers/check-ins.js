@@ -44,6 +44,7 @@ export const createCheckInClientController = async (req, res) => {
     check_out_date,
     comment,
     note,
+    isCheckIn
   } = req.body;
 
   const clientData = {
@@ -64,6 +65,7 @@ export const createCheckInClientController = async (req, res) => {
     check_in_date,
     check_out_date,
     note,
+    isCheckIn
   };
 
   const checkIn = await createCheckIn(checkInData);
