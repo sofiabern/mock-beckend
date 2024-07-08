@@ -34,6 +34,14 @@ export const getClientById = async (id) => {
   return await Client.findById(id);
 };
 
+export const getClient = async(field) =>{
+return await Client.find(field);
+};
+
 export const createClient = async (client) => {
   return await Client.create(client);
+};
+
+export const updateClient = async(id, field) =>{
+  return await Client.findByIdAndUpdate(id, field, { new: true });
 };
