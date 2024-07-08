@@ -5,7 +5,7 @@ import {
   deleteCheckIn,
 } from '../services/check-ins.js';
 
-import { createClient } from '../services/clients.js';
+import { createClient, getClient, updateClient } from '../services/clients.js';
 
 import { getRoomById } from '../services/rooms.js';
 
@@ -55,7 +55,28 @@ export const createCheckInClientController = async (req, res) => {
     comment,
   };
 
-  const client = await createClient(clientData);
+  const existingClient = await getClient({ passport_details });
+
+
+  if (existingClient) {
+    if (isCheckIn) {
+      existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
+      await updateClient(existingClient._id, {
+        visitsAmount: existingClient.visitsAmount,
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      message: 'Client with this passport number already exists!',
+      data: existingClient,
+    });
+  }
+    const client = await createClient(clientData);
+    if (isCheckIn) {
+      client.visitsAmount = 1;
+      await client.save();
+    }
 
   const clientId = client._id;
 
