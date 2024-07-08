@@ -96,7 +96,7 @@ export const deleteCheckInController = async (req, res) => {
     throw createHttpError(404, 'Check-in not found');
   }
 
-  await removeBookingFromRoom(checkIn.room, checkIn.booking);
+  await removeBookingFromRoom(checkIn.room, id);
 
   await deleteCheckIn(id);
 
