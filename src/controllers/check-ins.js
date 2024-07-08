@@ -5,7 +5,7 @@ import {
   deleteCheckIn,
 } from '../services/check-ins.js';
 
-import { createClient, getClient, updateClient } from '../services/clients.js';
+import { createClient, getClient, updateClient, getClientById } from '../services/clients.js';
 
 import { getRoomById } from '../services/rooms.js';
 
@@ -71,9 +71,8 @@ export const createCheckInClientController = async (req, res) => {
     });
   }
     const client = await createClient(clientData);
-
-      client.visitsAmount = 1;
-      await client.save();
+    client.visitsAmount = 1;
+    await client.save();
 
 
   const clientId = client._id;
@@ -118,6 +117,13 @@ export const deleteCheckInController = async (req, res) => {
   }
 
   await removeBookingFromRoom(checkIn.room, id);
+
+  const client = await getClientById(checkIn.client);
+  if (client && client.visitsAmount > 0) {
+    client.visitsAmount -= 1;
+    await client.save();
+  }
+
 
   await deleteCheckIn(id);
 
