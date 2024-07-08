@@ -71,10 +71,10 @@ export const createCheckInClientController = async (req, res) => {
     });
   }
     const client = await createClient(clientData);
-    if (isCheckIn) {
+
       client.visitsAmount = 1;
       await client.save();
-    }
+
 
   const clientId = client._id;
 
