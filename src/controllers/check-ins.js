@@ -58,30 +58,25 @@ export const createCheckInClientController = async (req, res) => {
 
   const clientId = client._id;
 
-  const roomDocument = await getRoomById(room);
-  if (!roomDocument) {
-    throw createHttpError(404, 'Room not found');
-  }
-
-  const bookingData = {
-    check_in_date,
-    check_out_date,
-  };
-
-  roomDocument.bookings.push(bookingData);
-  await roomDocument.save();
-  const bookingId = roomDocument.bookings[roomDocument.bookings.length - 1]._id;
-
   const checkInData = {
     room,
     client: clientId,
     check_in_date,
     check_out_date,
     note,
-    booking: bookingId,
   };
 
   const checkIn = await createCheckIn(checkInData);
+
+  const roomDocument = await getRoomById(room);
+  if (!roomDocument) {
+    throw createHttpError(404, 'Room not found');
+  }
+
+
+  roomDocument.bookingsAndCheckIns.push(checkIn._id);
+
+  await roomDocument.save();
 
   res.status(201).json({
     status: 201,

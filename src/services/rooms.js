@@ -2,7 +2,7 @@ import { Room } from '../db/models/rooms.js';
 import createHttpError from 'http-errors';
 
 export const getAllRooms = async () => {
-  return await Room.find();
+  return await Room.find().populate('bookingsAndCheckIns', 'check_in_date check_out_date');
 };
 
 export const getRoomById = async (id) => {
