@@ -35,7 +35,7 @@ export const getClientById = async (id) => {
 };
 
 export const getClient = async(field) =>{
-return await Client.find(field);
+return await Client.findOne(field);
 };
 
 export const createClient = async (client) => {

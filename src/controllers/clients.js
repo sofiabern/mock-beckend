@@ -33,6 +33,8 @@ export const createClientController = async (req, res) => {
   const { body } = req;
   const { passport_details, isCheckIn } = body;
 
+  let client;
+
   const existingClient = await getClient({ passport_details });
 
   if (existingClient) {
@@ -48,17 +50,17 @@ export const createClientController = async (req, res) => {
       message: 'Client with this passport number already exists!',
       data: existingClient,
     });
-  }
-
-  const client = await createClient(body);
-  if (isCheckIn) {
-    client.visitsAmount = 1;
-    await client.save();
+  } else {
+    client = await createClient(body);
+    if (isCheckIn) {
+      client.visitsAmount = 1;
+      await client.save();
+    }
   }
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created client!',
-    data: client,
+    data: client
   });
 };
