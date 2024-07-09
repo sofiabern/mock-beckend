@@ -30,6 +30,7 @@ export const createUser = async (payload) => {
   return await User.create({ ...payload, password: hashedPassword });
 };
 
+
 export const loginUser = async ({ email, password }) => {
   const user = await User.findOne({ email });
 

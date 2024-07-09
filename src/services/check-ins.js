@@ -18,3 +18,7 @@ export const createCheckIn = async (checkIn) => {
 export const deleteCheckIn = async (id) =>{
   return await CheckIn.findByIdAndDelete(id);
 };
+
+export const updateCheckIn = async(id, field) =>{
+return await CheckIn.findByIdAndUpdate(id, field, {new: true});
+};

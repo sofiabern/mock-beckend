@@ -3,9 +3,15 @@ import {
   getCheckInById,
   createCheckIn,
   deleteCheckIn,
+  updateCheckIn,
 } from '../services/check-ins.js';
 
-import { createClient, getClient, updateClient, getClientById } from '../services/clients.js';
+import {
+  createClient,
+  getClient,
+  updateClient,
+  getClientById,
+} from '../services/clients.js';
 
 import { getRoomById } from '../services/rooms.js';
 
@@ -44,7 +50,7 @@ export const createCheckInClientController = async (req, res) => {
     check_out_date,
     comment,
     note,
-    isCheckIn
+    isCheckIn,
   } = req.body;
 
   const clientData = {
@@ -57,12 +63,11 @@ export const createCheckInClientController = async (req, res) => {
 
   const existingClient = await getClient({ passport_details });
 
-
   if (existingClient) {
-      existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
-      await updateClient(existingClient._id, {
-        visitsAmount: existingClient.visitsAmount,
-      });
+    existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
+    await updateClient(existingClient._id, {
+      visitsAmount: existingClient.visitsAmount,
+    });
 
     return res.status(200).json({
       status: 200,
@@ -70,10 +75,9 @@ export const createCheckInClientController = async (req, res) => {
       data: existingClient,
     });
   }
-    const client = await createClient(clientData);
-    client.visitsAmount = 1;
-    await client.save();
-
+  const client = await createClient(clientData);
+  client.visitsAmount = 1;
+  await client.save();
 
   const clientId = client._id;
 
@@ -83,7 +87,7 @@ export const createCheckInClientController = async (req, res) => {
     check_in_date,
     check_out_date,
     note,
-    isCheckIn
+    isCheckIn,
   };
 
   const checkIn = await createCheckIn(checkInData);
@@ -92,7 +96,6 @@ export const createCheckInClientController = async (req, res) => {
   if (!roomDocument) {
     throw createHttpError(404, 'Room not found');
   }
-
 
   roomDocument.bookingsAndCheckIns.push(checkIn._id);
 
@@ -124,11 +127,27 @@ export const deleteCheckInController = async (req, res) => {
     await client.save();
   }
 
-
   await deleteCheckIn(id);
 
   res.status(200).json({
     status: 200,
     message: 'Successfully deleted check-in and booking!',
+  });
+};
+
+export const updateCheckInController = async (req, res) => {
+  const id = req.params.checkInId;
+  const updateDate = req.body;
+
+  const checkIn = await updateCheckIn(id, updateDate);
+
+  if (!checkIn) {
+    throw createHttpError(404, 'Room not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated check-in with id ${id}!`,
+    data: checkIn,
   });
 };

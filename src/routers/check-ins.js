@@ -4,7 +4,8 @@ import {
   getAllCheckInsController,
   getCheckInByIdController,
   createCheckInClientController,
-  deleteCheckInController
+  deleteCheckInController,
+  updateCheckInController
 } from '../controllers/check-ins.js';
 
 
@@ -25,5 +26,7 @@ checkInsRouter.get(
 );
 
 checkInsRouter.post('/', ctrlWrapper(createCheckInClientController));
+
+checkInsRouter.patch('/:checkInId', ctrlWrapper(updateCheckInController));
 
 checkInsRouter.delete( '/:checkInId', ctrlWrapper(deleteCheckInController));
