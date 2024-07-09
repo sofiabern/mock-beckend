@@ -34,7 +34,7 @@ export const getClientById = async (id) => {
   return await Client.findById(id);
 };
 
-export const getClient = async(field) =>{
+export const getClient = async (field) =>{
 return await Client.findOne(field);
 };
 

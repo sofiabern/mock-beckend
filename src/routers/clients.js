@@ -6,6 +6,7 @@ import {
   getAllClientsController,
   getClientByIdController,
   createClientController,
+  getClientVisitsController
 } from '../controllers/clients.js';
 
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
@@ -14,6 +15,8 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { createClientSchema } from '../validation/clients/createClientSchema.js';
 
 export const clientsRouter = Router();
+
+clientsRouter.get('/:passportDetails', ctrlWrapper(getClientVisitsController));
 
 clientsRouter.use('/:clientId', validateMongoId('clientId'));
 

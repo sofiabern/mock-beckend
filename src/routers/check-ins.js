@@ -30,3 +30,4 @@ checkInsRouter.post('/', ctrlWrapper(createCheckInClientController));
 checkInsRouter.patch('/:checkInId', ctrlWrapper(updateCheckInController));
 
 checkInsRouter.delete( '/:checkInId', ctrlWrapper(deleteCheckInController));
+
