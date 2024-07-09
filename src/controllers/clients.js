@@ -1,4 +1,4 @@
-import createHttpError from 'http-errors';
+
 import {
   getAllClients,
   getClientById,
@@ -67,18 +67,22 @@ export const createClientController = async (req, res) => {
 };
 
 export const getClientVisitsController = async (req, res) => {
-  const passport_details = req.params.passportDetails; 
+  const passport_details = req.params.passportDetails;
 
   const client = await getClient({ passport_details });
 
+  let visitsAmount;
+
   if (!client) {
-    throw createHttpError(
-      404,
-      `Client with passport number ${passport_details} not found`,
-    );
+    visitsAmount = 0;
+    return res.json({
+      status: 200,
+      message: `Successfully detected that client with passport number ${passport_details} has never visited hotel`,
+      data: visitsAmount,
+    });
   }
 
-  const visitsAmount = client.visitsAmount;
+  visitsAmount = client.visitsAmount;
 
   res.json({
     status: 200,
