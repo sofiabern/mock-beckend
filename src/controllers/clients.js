@@ -77,7 +77,7 @@ export const getClientVisitsController = async (req, res) => {
     visitsAmount = 0;
     return res.json({
       status: 200,
-      message: `Successfully detected that client with passport number ${passport_details} has never visited hotel`,
+      message: `Client with passport number ${passport_details} has never visited hotel`,
       data: visitsAmount,
     });
   }
