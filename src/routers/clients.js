@@ -19,6 +19,6 @@ clientsRouter.use('/:clientId', validateMongoId('clientId'));
 
 clientsRouter.get('/', ctrlWrapper(getAllClientsController));
 
-clientsRouter.get('/:clientId',validateMongoId('clientId'), ctrlWrapper(getClientByIdController));
+clientsRouter.get('/:clientId', ctrlWrapper(getClientByIdController));
 
 clientsRouter.post('/', validateBody(createClientSchema), ctrlWrapper(createClientController));
