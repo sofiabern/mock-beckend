@@ -62,19 +62,43 @@ export const createCheckInClientController = async (req, res) => {
   };
 
   const existingClient = await getClient({ passport_details });
+  const existingClientId = existingClient._id;
 
   if (existingClient) {
     existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
     await updateClient(existingClient._id, {
       visitsAmount: existingClient.visitsAmount,
     });
+    
+    const checkInData = {
+      room,
+      client: existingClientId,
+      check_in_date,
+      check_out_date,
+      note,
+      isCheckIn,
+    };
 
+    const checkIn = await createCheckIn(checkInData);
+
+    const roomDocument = await getRoomById(room);
+    if (!roomDocument) {
+      throw createHttpError(404, 'Room not found');
+    }
+
+    roomDocument.bookingsAndCheckIns.push(checkIn._id);
+
+    await roomDocument.save();
     return res.status(200).json({
       status: 200,
       message: 'Client with this passport number already exists!',
-      data: existingClient,
+      data: {
+        client: existingClient,
+        checkIn: checkIn,
+      },
     });
   }
+
   const client = await createClient(clientData);
   client.visitsAmount = 1;
   await client.save();
