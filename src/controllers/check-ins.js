@@ -57,14 +57,6 @@ export const createCheckInClientController = async (req, res) => {
     totalPrice
   } = req.body;
 
-  const clientData = {
-    last_name,
-    first_name,
-    middle_name,
-    passport_details,
-    comment,
-  };
-
   const existingClient = await getClient({ passport_details });
 
   if (existingClient) {
@@ -107,6 +99,8 @@ export const createCheckInClientController = async (req, res) => {
       },
     });
   } else {
+
+
     const clientData = {
       last_name,
       first_name,
@@ -115,11 +109,11 @@ export const createCheckInClientController = async (req, res) => {
       comment,
       visitsAmount: 1,
     };
+
     const client = await createClient(clientData);
 
     const clientId = client._id;
-    // client.visitsAmount = 1;
-    // await client.save();
+
 
     const checkInData = {
       room,
