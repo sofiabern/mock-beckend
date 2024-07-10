@@ -51,6 +51,10 @@ export const createCheckInClientController = async (req, res) => {
     comment,
     note,
     isCheckIn,
+    discounts,
+    totalDiscount,
+    totalDayPrice,
+    totalPrice
   } = req.body;
 
   const clientData = {
@@ -62,14 +66,15 @@ export const createCheckInClientController = async (req, res) => {
   };
 
   const existingClient = await getClient({ passport_details });
-  const existingClientId = existingClient._id;
 
   if (existingClient) {
+    const existingClientId = existingClient._id;
+
     existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
     await updateClient(existingClient._id, {
       visitsAmount: existingClient.visitsAmount,
     });
-    
+
     const checkInData = {
       room,
       client: existingClientId,
@@ -77,6 +82,10 @@ export const createCheckInClientController = async (req, res) => {
       check_out_date,
       note,
       isCheckIn,
+      discounts,
+      totalDiscount,
+      totalDayPrice,
+      totalPrice
     };
 
     const checkIn = await createCheckIn(checkInData);
@@ -97,43 +106,58 @@ export const createCheckInClientController = async (req, res) => {
         checkIn: checkIn,
       },
     });
+  } else {
+    const clientData = {
+      last_name,
+      first_name,
+      middle_name,
+      passport_details,
+      comment,
+      visitsAmount: 1,
+    };
+    const client = await createClient(clientData);
+
+    const clientId = client._id;
+    // client.visitsAmount = 1;
+    // await client.save();
+
+    const checkInData = {
+      room,
+      client: clientId,
+      check_in_date,
+      check_out_date,
+      note,
+      isCheckIn,
+      discounts,
+      totalDiscount,
+      totalDayPrice,
+      totalPrice
+    };
+
+    const checkIn = await createCheckIn(checkInData);
+
+    const roomDocument = await getRoomById(room);
+    if (!roomDocument) {
+      throw createHttpError(404, 'Room not found');
+    }
+
+    roomDocument.bookingsAndCheckIns.push(checkIn._id);
+
+    await roomDocument.save();
+
+    res.status(201).json({
+      status: 201,
+      message: `Successfully created client with check-in!`,
+      data: {
+        client: client,
+        checkIn: checkIn,
+      },
+    });
   }
-
-  const client = await createClient(clientData);
-  client.visitsAmount = 1;
-  await client.save();
-
-  const clientId = client._id;
-
-  const checkInData = {
-    room,
-    client: clientId,
-    check_in_date,
-    check_out_date,
-    note,
-    isCheckIn,
-  };
-
-  const checkIn = await createCheckIn(checkInData);
-
-  const roomDocument = await getRoomById(room);
-  if (!roomDocument) {
-    throw createHttpError(404, 'Room not found');
-  }
-
-  roomDocument.bookingsAndCheckIns.push(checkIn._id);
-
-  await roomDocument.save();
-
-  res.status(201).json({
-    status: 201,
-    message: `Successfully created client with check-in!`,
-    data: {
-      client: client,
-      checkIn: checkIn,
-    },
-  });
 };
+
+
+
 
 export const deleteCheckInController = async (req, res) => {
   const id = req.params.checkInId;
