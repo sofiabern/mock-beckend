@@ -9,6 +9,8 @@ const checkInSchema = new Schema(
     check_out_date: { type: Date, required: true },
     note: { type: String },
     isCheckIn: { type: Boolean, required: true },
+    totalDayPrice: { type: Number, required: true },
+    totalPrice: { type: Number, required: true },
   },
   { timestamps: false, versionKey: false },
 );

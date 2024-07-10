@@ -62,11 +62,6 @@ export const createCheckInClientController = async (req, res) => {
   if (existingClient) {
     const existingClientId = existingClient._id;
 
-    existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
-    await updateClient(existingClient._id, {
-      visitsAmount: existingClient.visitsAmount,
-    });
-
     const checkInData = {
       room,
       client: existingClientId,
@@ -74,11 +69,18 @@ export const createCheckInClientController = async (req, res) => {
       check_out_date,
       note,
       isCheckIn,
-      discounts,
-      totalDiscount,
       totalDayPrice,
       totalPrice
     };
+
+
+    existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
+    await updateClient(existingClient._id, {
+      visitsAmount: existingClient.visitsAmount,
+      discounts, totalDiscount
+    });
+
+
 
     const checkIn = await createCheckIn(checkInData);
 
@@ -92,7 +94,7 @@ export const createCheckInClientController = async (req, res) => {
     await roomDocument.save();
     return res.status(200).json({
       status: 200,
-      message: 'Client with this passport number already exists!',
+      message: 'Client with this passport number has visited hotel',
       data: {
         client: existingClient,
         checkIn: checkIn,
@@ -108,6 +110,8 @@ export const createCheckInClientController = async (req, res) => {
       passport_details,
       comment,
       visitsAmount: 1,
+      discounts,
+      totalDiscount,
     };
 
     const client = await createClient(clientData);
@@ -122,8 +126,6 @@ export const createCheckInClientController = async (req, res) => {
       check_out_date,
       note,
       isCheckIn,
-      discounts,
-      totalDiscount,
       totalDayPrice,
       totalPrice
     };

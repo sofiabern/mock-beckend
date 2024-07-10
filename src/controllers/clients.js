@@ -6,12 +6,13 @@ import {
   createClient,
   updateClient,
 } from '../services/clients.js';
-import { parsePaginationParams } from '../utils/parsеPaginationParams.js';
+// import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getAllClientsController = async (req, res) => {
-  const { page, perPage } = parsePaginationParams(req.query);
+  // const { page, perPage } = parsePaginationParams(req.query);
 
-  const clients = await getAllClients({ page, perPage });
+  // const clients = await getAllClients({ page, perPage });
+  const clients = await getAllClients();
   res.json({
     status: 200,
     message: 'Successfully got all clients!',
