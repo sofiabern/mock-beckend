@@ -16,7 +16,10 @@ import { createClientSchema } from '../validation/clients/createClientSchema.js'
 
 export const clientsRouter = Router();
 
-clientsRouter.get('/:passportDetails', ctrlWrapper(getClientVisitsController));
+
+
+
+clientsRouter.post('/visits', ctrlWrapper(getClientVisitsController));
 
 clientsRouter.use('/:clientId', validateMongoId('clientId'));
 

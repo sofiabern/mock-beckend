@@ -67,7 +67,7 @@ export const createClientController = async (req, res) => {
 };
 
 export const getClientVisitsController = async (req, res) => {
-  const passport_details = req.params.passportDetails;
+ const {passport_details} = req.body;
 
   const client = await getClient({ passport_details });
 
