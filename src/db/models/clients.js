@@ -10,11 +10,11 @@ const clientSchema = new Schema({
     comment: { type: String },
     visitsAmount: {type: Number, required: true},
     discounts: {
-      regularCustomer: { type: Number, default: 0 },
-      military: { type: Number, default: 0 },
-      guardian: { type: Number, default: 0 }
+      regularCustomer: { type: Number},
+      military: { type: Number},
+      guardian: { type: Number}
     },
-    totalDiscount: { type: Number, default: 0 },
+    totalDiscount: { type: Number },
   },
   { timestamps: false, versionKey: false },
 );
