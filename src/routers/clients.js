@@ -16,7 +16,7 @@ import { createClientSchema } from '../validation/clients/createClientSchema.js'
 export const clientsRouter = Router();
 
 
-clientsRouter.use(authenticate);
+// clientsRouter.use(authenticate);
 
 clientsRouter.post('/visits', ctrlWrapper(getClientVisitsController));
 
