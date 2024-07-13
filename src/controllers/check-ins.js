@@ -124,7 +124,7 @@ export const createCheckInClientController = async (req, res) => {
       client: clientId,
       check_in_date,
       check_out_date,
-      note,
+      note: comment,
       isCheckIn,
       totalDayPrice,
       totalPrice
