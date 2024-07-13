@@ -49,7 +49,6 @@ export const createCheckInClientController = async (req, res) => {
     check_in_date,
     check_out_date,
     comment,
-    note,
     isCheckIn,
     discounts,
     totalDiscount,
@@ -67,7 +66,7 @@ export const createCheckInClientController = async (req, res) => {
       client: existingClientId,
       check_in_date,
       check_out_date,
-      note,
+      note: comment,
       isCheckIn,
       totalDayPrice,
       totalPrice
