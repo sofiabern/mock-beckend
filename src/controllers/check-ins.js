@@ -86,12 +86,13 @@ export const createCheckInClientController = async (req, res) => {
 
     const roomDocument = await getRoomById(room);
     if (!roomDocument) {
-      throw createHttpError(404, 'Room not found');
+      throw createHttpError(500, 'Room not found');
     }
 
     roomDocument.bookingsAndCheckIns.push(checkIn._id);
 
     await roomDocument.save();
+
     return res.status(200).json({
       status: 200,
       message: 'Client with this passport number has visited hotel',
@@ -134,7 +135,7 @@ export const createCheckInClientController = async (req, res) => {
 
     const roomDocument = await getRoomById(room);
     if (!roomDocument) {
-      throw createHttpError(404, 'Room not found');
+      throw createHttpError(500, 'Room not found');
     }
 
     roomDocument.bookingsAndCheckIns.push(checkIn._id);

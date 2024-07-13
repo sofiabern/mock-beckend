@@ -1,36 +1,31 @@
 import createHttpError from 'http-errors';
-import { Session } from '../db/models/session';
-import { User } from '../db/models/users';
+import jwt from 'jsonwebtoken';
+import { User } from '../db/models/users.js';
+
+const { JWT_SECRET } = process.env;
+
 
 export const authenticate = async (req, res, next) => {
-  const header = req.get('Authorization');
-  if (!header) {
-    return next(createHttpError(401, 'Auth header is not provided'));
-  }
-  const [bearer, token] = header.split(' ');
-
-  if (bearer !== 'Bearer' || !token) {
-    return next(createHttpError(401, 'Auth header should be of bearer type'));
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return next(createHttpError(401, 'Authorization header is not defined'));
   }
 
-  const session = await Session.findOne({ accessToken: token });
-
-  if (!session) {
-    return next(createHttpError(401, 'Auth session not found'));
+  const [bearer, token] = authorization.split(' ');
+  if (bearer !== 'Bearer') {
+    return next(createHttpError(401));
   }
 
-  if (Date.now() > session.accessTokenValidUntil) {
-    return next(createHttpError(401, 'Session token is expired'));
+  try {
+    const { id } = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(id);
+
+    if(!user || !user.token || token !== user.token){
+       return next(createHttpError(401)) ;
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    next(createHttpError(401, error.message));
   }
-
-  const user = await User.findById(session.userId);
-
-  if (!user) {
-    return next(
-      createHttpError(401, 'User associated with this session is not found'),
-    );
-  }
-
-  req.user = user;
-  return next();
 };

@@ -1,17 +1,20 @@
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
-    {
-        name: { type: String, required: true },
-        password: { type: String, required: true },
-        email: { type: String, required: true, unique: true },
-    }, { timestamps: false, versionKey: false }
+  {
+    name: { type: String, required: true },
+    password: { type: String, required: true, minlength: 6 },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    },
+    token: {
+      type: String,
+    },
+  },
+  { timestamps: true, versionKey: false },
 );
-
-userSchema.methods.toJSON = function () {
-const obj = this.toObject();
-delete obj.password;
-return obj;
-};
 
 export const User = model('user', userSchema);

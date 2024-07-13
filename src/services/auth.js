@@ -1,18 +1,9 @@
 import createHttpError from 'http-errors';
 import { User } from '../db/models/users.js';
-import { Session } from '../db/models/session.js';
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
+import jwt from "jsonwebtoken";
 
-const createSession = () => {
-  return {
-    accessTokenValidUntil: Date.now() + 1000 * 60 * 15,
-    refreshTokenValidUntil: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    accessToken: crypto.randomBytes(20).toString('base64'),
-    refreshToken: crypto.randomBytes(20).toString('base64'),
-  };
-};
-
+const {JWT_SECRET} = process.env;
 
 
 export const createUser = async (payload) => {
@@ -43,43 +34,17 @@ export const loginUser = async ({ email, password }) => {
     throw createHttpError(401, 'Unauthorized');
   }
 
-  return await Session.create({
-    userId: user._id,
-    ...createSession(),
-  });
+  const{_id: id} = user;
+  const payload = {
+    id
+  };
+
+  const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "12h"});
+await User.findByIdAndUpdate(id, {token});
+  return token;
 };
 
-export const refreshSession = async ({sessionId, sessionToken}) => {
-  const session = await Session.findOne({
-    _id: sessionId,
-    refreshToken: sessionToken,
-  });
 
-  if (!session) {
-    throw createHttpError(401, 'Session not found');
-  }
-
-  if (new Date() > session.refreshTokenValidUntil) {
-    throw createHttpError(401, 'Refresh token is expired ');
-  }
-
-  const user = await User.findById(session.userId);
-
-  if (!user) {
-    throw createHttpError(401, 'Session not found');
-  }
-
-  await Session.deleteOne({ _id: sessionId });
-
-  return await Session.create({
-    userId: user._id,
-    ...createSession(),
-  });
-};
-
-export const logoutUser = async ({ sessionId, sessionToken }) => {
-  return await Session.deleteOne({
-    _id: sessionId,
-    refreshToken: sessionToken,
-  });
+export const logoutUser = async (id, field) => {
+  return await User.findByIdAndUpdate(id, field);
 };

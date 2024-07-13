@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-
+import { authenticate } from '../middlewares/authenticate.js';
 
 import {
   getAllClientsController,
@@ -17,7 +16,7 @@ import { createClientSchema } from '../validation/clients/createClientSchema.js'
 export const clientsRouter = Router();
 
 
-
+clientsRouter.use(authenticate);
 
 clientsRouter.post('/visits', ctrlWrapper(getClientVisitsController));
 

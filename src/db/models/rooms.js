@@ -9,7 +9,7 @@ const roomSchema = new Schema(
     bookingsAndCheckIns:  [{ type: Schema.Types.ObjectId, ref: 'check-in' }],
     comfort_level: {
       type: String,
-      enum: ['Standard', 'Semi-Lux', 'Lux'],
+      enum: ['Suite', 'Junior Suite', 'Standard'],
       required: true,
     },
     price: { type: Number, required: true },

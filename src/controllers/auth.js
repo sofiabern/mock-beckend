@@ -1,21 +1,6 @@
-import { createUser } from '../services/auth.js';
-import { loginUser } from '../services/auth.js';
-import { refreshSession } from '../services/auth.js';
-import { logoutUser } from '../services/auth.js';
+import { createUser, logoutUser, loginUser } from '../services/auth.js';
 
-
-const setUpSessionCookies = (res, session) =>{
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expire: 7 * 24 * 60 * 60,
-  });
-  res.cookie('sessionToken', session.refreshToken, {
-    httpOnly: true,
-    expire: 7 * 24 * 60 * 60,
-  });
-};
-
-export const registerUserController = async (req, res) => {
+export const signupUserController = async (req, res) => {
   const user = await createUser(req.body);
 
   res.json({
@@ -25,42 +10,32 @@ export const registerUserController = async (req, res) => {
   });
 };
 
-export const loginUserController = async (req, res) =>{
-  const session = await loginUser(req.body);
-
-setUpSessionCookies(res, session);
+export const loginUserController = async (req, res) => {
+  const userToken = await loginUser(req.body);
 
   res.json({
     status: 200,
     message: 'User is logged in!',
-    data: { accessToken: session.accessToken },
+    data: {
+      userToken,
+    },
   });
 };
 
-export const refreshTokenController = async (req, res) =>{
-const {sessionId, sessionToken} = req.cookies;
-const session = await refreshSession({sessionId, sessionToken});
+export const getCurrentContoller = async (req, res) => {
+  const { name, email } = req.user;
 
-
-setUpSessionCookies(res, session);
-
-res.json({
-  status: 200,
-  message: 'Token refreshed successfully',
-  data: { accessToken: session.accessToken },
-});
+  res.json({
+    name,
+    email,
+  });
 };
 
 export const logoutUserController = async (req, res) => {
-  await logoutUser({
-    sessionId: req.cookies.sessionId,
-    sessionToken: req.cookies.sessionToken,
+  const { _id } = req.user;
+  await logoutUser(_id, { token: '' });
+  res.status(200).json({
+    status: 200,
+    message: 'Signout successful',
   });
-
-  res.clearCookie('sessionId');
-  res.clearCookie('sessionToken');
-
-  res.status(204).send();
 };
-
-
