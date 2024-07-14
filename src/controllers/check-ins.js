@@ -146,7 +146,7 @@ export const createCheckInClientController = async (req, res) => {
       message: `Created check-in and client, and updated room`,
       data: {
         checkIn: checkIn,
-  
+
       },
     });
   }
@@ -192,6 +192,8 @@ export const updateCheckInController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: `Successfully updated check-in with id ${id}!`,
-    data: checkIn,
+    data: {
+      checkIn
+    }
   });
 };
