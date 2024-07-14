@@ -36,6 +36,6 @@ export const logoutUserController = async (req, res) => {
   await logoutUser(_id, { token: '' });
   res.status(200).json({
     status: 200,
-    message: 'Signout successful',
+    message: 'Logout successful',
   });
 };

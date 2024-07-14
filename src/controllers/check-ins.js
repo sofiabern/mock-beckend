@@ -94,10 +94,10 @@ export const createCheckInClientController = async (req, res) => {
 
     return res.status(200).json({
       status: 200,
-      message: 'Client with this passport number has visited hotel',
+      message: 'Created check-in, and updated client and room',
       data: {
-        client: existingClient,
         checkIn: checkIn,
+
       },
     });
   } else {
@@ -143,10 +143,10 @@ export const createCheckInClientController = async (req, res) => {
 
     res.status(201).json({
       status: 201,
-      message: `Successfully created client with check-in!`,
+      message: `Created check-in and client, and updated room`,
       data: {
-        client: client,
         checkIn: checkIn,
+  
       },
     });
   }
