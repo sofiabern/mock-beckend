@@ -23,7 +23,7 @@ export const checkInsRouter = Router();
 
 checkInsRouter.get('/', ctrlWrapper(getAllCheckInsController));
 
-checkInsRouter.post('/', ctrlWrapper(createCheckInController));
+checkInsRouter.post('/', validateBody(createCheckInSchema), ctrlWrapper(createCheckInController));
 
 checkInsRouter.patch('/:checkInId',  validateMongoId('checkInId'), validateBody(updateCheckInSchema), ctrlWrapper(updateCheckInController));
 
