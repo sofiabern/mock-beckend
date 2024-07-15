@@ -28,7 +28,7 @@ export const updateRoomController = async (req, res) => {
   const room = await updateRoom(id, updateData);
 
   if (!room) {
-    throw createHttpError(404, 'Room not found');
+    throw createHttpError(500, 'Room not found');
 
   }
 

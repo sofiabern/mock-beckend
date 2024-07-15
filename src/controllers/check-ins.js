@@ -39,7 +39,7 @@ export const getCheckInByIdController = async (req, res) => {
   });
 };
 
-export const createCheckInClientController = async (req, res) => {
+export const createCheckInController = async (req, res) => {
   const {
     last_name,
     first_name,
@@ -186,7 +186,7 @@ export const updateCheckInController = async (req, res) => {
   const checkIn = await updateCheckIn(id, updateDate);
 
   if (!checkIn) {
-    throw createHttpError(404, 'Room not found');
+    throw createHttpError(505, 'Room not found');
   }
 
   res.status(200).json({

@@ -19,7 +19,7 @@ export const updateRoom = async (id, updateData) => {
 export const removeBookingFromRoom = async (roomId, checkInId) => {
   const room = await Room.findById(roomId);
   if (!room) {
-    throw createHttpError(404, 'Room not found');
+    throw createHttpError(500, 'Room not found');
   }
 
   room.bookingsAndCheckIns = room.bookingsAndCheckIns.filter(

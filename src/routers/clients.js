@@ -1,29 +1,25 @@
 import { Router } from 'express';
-import { authenticate } from '../middlewares/authenticate.js';
 
+// Controllers
 import {
   getAllClientsController,
-  getClientByIdController,
-  createClientController,
   getClientVisitsController
 } from '../controllers/clients.js';
 
+// Middlewares
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
-import { validateMongoId } from '../middlewares/validateMongoId.js';
-import { validateBody } from '../middlewares/validateBody.js';
-import { createClientSchema } from '../validation/clients/createClientSchema.js';
+import {validateBody} from "../middlewares/validateBody.js";
+// import { authenticate } from '../middlewares/authenticate.js';
+
+// Schemas
+import { getVisitsSchema } from '../validation/clients/getVisitsScchema.js';
+
+
 
 export const clientsRouter = Router();
 
-
 // clientsRouter.use(authenticate);
-
-clientsRouter.post('/visits', ctrlWrapper(getClientVisitsController));
-
-clientsRouter.use('/:clientId', validateMongoId('clientId'));
 
 clientsRouter.get('/', ctrlWrapper(getAllClientsController));
 
-clientsRouter.get('/:clientId', ctrlWrapper(getClientByIdController));
-
-clientsRouter.post('/', validateBody(createClientSchema), ctrlWrapper(createClientController));
+clientsRouter.post('/visits', validateBody(getVisitsSchema), ctrlWrapper(getClientVisitsController));
