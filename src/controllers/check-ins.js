@@ -13,8 +13,7 @@ import {
   getClientById,
 } from '../services/clients.js';
 
-import { getRoomById, removeBookingFromRoom  } from '../services/rooms.js';
-
+import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
 
 import createHttpError from 'http-errors';
 
@@ -37,7 +36,6 @@ export const getCheckInByIdController = async (req, res) => {
     data: checkIn,
   });
 };
-
 
 export const deleteCheckInController = async (req, res) => {
   const id = req.params.checkInId;
@@ -77,8 +75,8 @@ export const updateCheckInController = async (req, res) => {
     status: 200,
     message: `Successfully updated check-in with id ${id}!`,
     data: {
-      checkIn
-    }
+      checkIn,
+    },
   });
 };
 
@@ -96,7 +94,7 @@ const createClientAndCheckin = async ({
   isCheckIn,
   totalDayPrice,
   totalPrice,
-  roomDocument
+  roomDocument,
 }) => {
   const clientData = {
     last_name,
@@ -146,13 +144,10 @@ const createCheckin = async ({
   totalPrice,
   discounts,
   totalDiscount,
-  roomDocument
-
+  roomDocument,
 }) => {
   const existingClient = await getClient({ _id: existingClientId });
-  if (!existingClient) {
-    throw createHttpError(404, 'Client not found');
-  }
+  // Видалити existingClient і переробити id
 
   existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
   await updateClient(existingClient._id, {
@@ -224,8 +219,7 @@ export const createCheckInController = async (req, res) => {
         totalPrice,
         discounts,
         totalDiscount,
-        roomDocument
-
+        roomDocument,
       });
       return res.status(200).json({
         status: 200,
@@ -255,7 +249,6 @@ export const createCheckInController = async (req, res) => {
         totalDayPrice,
         totalPrice,
         roomDocument
-
       });
       return res.status(201).json({
         status: 201,
