@@ -50,3 +50,7 @@ export const createClient = async (client) => {
 export const updateClient = async(id, field) =>{
   return await Client.findByIdAndUpdate(id, field, { new: true });
 };
+
+export const deleteClient = async(id) =>{
+  return Client.findByIdAndDelete(id);
+};

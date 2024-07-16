@@ -11,6 +11,7 @@ import {
   getClient,
   updateClient,
   getClientById,
+  deleteClient,
 } from '../services/clients.js';
 
 import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
@@ -48,16 +49,24 @@ export const deleteCheckInController = async (req, res) => {
   await removeBookingFromRoom(checkIn.room, id);
 
   const client = await getClientById(checkIn.client);
-  if (client && client.visitsAmount > 0) {
+  if (!client) {
+    throw createHttpError(404, 'Client not found');
+  }
+
+
+  if (client.visitsAmount === 1) {
+    await deleteClient(client._id);
+
+  }else{
     client.visitsAmount -= 1;
     await client.save();
   }
-
+  
   await deleteCheckIn(id);
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully deleted check-in and booking!',
+    message: 'Successfully deleted check-in or booking!',
   });
 };
 
@@ -248,7 +257,7 @@ export const createCheckInController = async (req, res) => {
         isCheckIn,
         totalDayPrice,
         totalPrice,
-        roomDocument
+        roomDocument,
       });
       return res.status(201).json({
         status: 201,
