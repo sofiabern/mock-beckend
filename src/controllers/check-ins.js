@@ -61,7 +61,7 @@ export const deleteCheckInController = async (req, res) => {
     client.visitsAmount -= 1;
     await client.save();
   }
-  
+
   await deleteCheckIn(id);
 
   res.status(200).json({
@@ -144,7 +144,6 @@ const createClientAndCheckin = async ({
 
 const createCheckin = async ({
   room,
-  client: existingClientId,
   check_in_date,
   check_out_date,
   note,
@@ -154,9 +153,8 @@ const createCheckin = async ({
   discounts,
   totalDiscount,
   roomDocument,
+  existingClient
 }) => {
-  const existingClient = await getClient({ _id: existingClientId });
-  // Видалити existingClient і переробити id
 
   existingClient.visitsAmount = (existingClient.visitsAmount || 0) + 1;
   await updateClient(existingClient._id, {
@@ -167,7 +165,7 @@ const createCheckin = async ({
 
   const checkInData = {
     room,
-    client: existingClientId,
+    client: existingClient._id,
     check_in_date,
     check_out_date,
     note,
@@ -219,7 +217,6 @@ export const createCheckInController = async (req, res) => {
     try {
       const result = await createCheckin({
         room,
-        client: existingClient._id,
         check_in_date,
         check_out_date,
         note: comment,
@@ -229,6 +226,7 @@ export const createCheckInController = async (req, res) => {
         discounts,
         totalDiscount,
         roomDocument,
+        existingClient
       });
       return res.status(200).json({
         status: 200,
