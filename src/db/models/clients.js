@@ -7,7 +7,6 @@ const clientSchema = new Schema({
     first_name: { type: String, required: true },
     middle_name: { type: String },
     passport_details: { type: String, required: true },
-    comment: { type: String },
     visitsAmount: {type: Number},
     discounts: {
       regularCustomer: { type: Number},
