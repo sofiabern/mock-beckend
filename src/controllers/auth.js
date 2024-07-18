@@ -11,13 +11,13 @@ export const signupUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-  const userToken = await loginUser(req.body);
+  const token = await loginUser(req.body);
 
   res.json({
     status: 200,
     message: 'User is logged in!',
     data: {
-      userToken,
+      token,
     },
   });
 };
