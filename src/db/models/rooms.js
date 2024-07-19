@@ -12,6 +12,7 @@ const roomSchema = new Schema(
       enum: ['Suite', 'Junior Suite', 'Standard'],
       required: true,
     },
+    image:{type: String, required: true},
     price: { type: Number, required: true },
   },
   { timestamps: false, versionKey: false },
