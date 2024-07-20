@@ -32,3 +32,4 @@ checkInsRouter.patch('/:checkInId',  validateMongoId('checkInId'), validateBody(
 
 checkInsRouter.delete( '/:checkInId', validateMongoId('checkInId'), ctrlWrapper(deleteCheckInController));
 
+// Впав деплой
