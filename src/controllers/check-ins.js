@@ -16,10 +16,15 @@ import {
 
 import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
 
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+
+
 import createHttpError from 'http-errors';
 
 export const getAllCheckInsController = async (req, res) => {
-  const checkIns = await getAllCheckIns();
+    const { page, perPage } = parsePaginationParams(req.query);
+
+  const checkIns = await getAllCheckIns({ page, perPage });
   res.json({
     status: 200,
     message: 'Successfully got all check-ins!',
