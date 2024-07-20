@@ -14,7 +14,7 @@ const createPaginationInformation = (page, perPage, count) => {
   };
 };
 
-export const getAllCheckIns = async ({ page = 1, perPage = 6 }) => {
+export const getCheckIns = async ({ page = 1, perPage = 6 }) => {
   const skip = perPage * (page - 1);
 
   const [checkInsCount, checkIns] = await Promise.all([
@@ -37,12 +37,12 @@ export const getAllCheckIns = async ({ page = 1, perPage = 6 }) => {
   };
 };
 
-// export const getAllCheckIns = async () => {
+export const getAllCheckIns = async () => {
 
-//   return await CheckIn.find({})
-// .populate('client', 'first_name middle_name last_name')
-// .populate('room', 'room_number')
-// };
+  return await CheckIn.find({})
+.populate('client', 'first_name middle_name last_name')
+.populate('room', 'room_number');
+};
 
 export const getCheckInById = async (id) => {
   return await CheckIn.findById(id);

@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 // Conrollers
 import {
+  getCheckInsController,
   getAllCheckInsController,
   createCheckInController,
   deleteCheckInController,
@@ -21,7 +22,9 @@ import { updateCheckInSchema } from '../validation/check-ins/updateCheckInSchema
 
 export const checkInsRouter = Router();
 
-checkInsRouter.get('/', ctrlWrapper(getAllCheckInsController));
+checkInsRouter.get('/', ctrlWrapper(getCheckInsController));
+
+checkInsRouter.get('/all', ctrlWrapper(getAllCheckInsController));
 
 checkInsRouter.post('/', validateBody(createCheckInSchema), ctrlWrapper(createCheckInController));
 

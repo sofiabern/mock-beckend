@@ -1,5 +1,6 @@
 import {
   getAllCheckIns,
+  getCheckIns,
   getCheckInById,
   createCheckIn,
   deleteCheckIn,
@@ -18,13 +19,24 @@ import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
 
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
-
 import createHttpError from 'http-errors';
 
+
+
 export const getAllCheckInsController = async (req, res) => {
+
+  const checkIns = await getAllCheckIns();
+  res.json({
+    status: 200,
+    message: 'Successfully got all check-ins!',
+    data: checkIns,
+  });
+};
+
+export const getCheckInsController = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
 
-  const checkIns = await getAllCheckIns({ page, perPage });
+  const checkIns = await getCheckIns({ page, perPage });
   res.json({
     status: 200,
     message: 'Successfully got all check-ins!',
