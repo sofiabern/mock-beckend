@@ -34,14 +34,22 @@ export const getAllCheckInsController = async (req, res) => {
 };
 
 export const getCheckInsController = async (req, res) => {
-    const { page, perPage } = parsePaginationParams(req.query);
+  const { page = 1, perPage = 6, filter = '' } = req.query;
 
-  const checkIns = await getCheckIns({ page, perPage });
-  res.json({
-    status: 200,
-    message: 'Successfully got all check-ins!',
-    data: checkIns,
-  });
+  try {
+    const checkIns = await getCheckIns({ page, perPage, filter });
+    res.json({
+      status: 200,
+      message: 'Successfully got filtered check-ins!',
+      data: checkIns,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      message: 'Failed to get check-ins',
+      error: error.message,
+    });
+  }
 };
 
 export const getCheckInByIdController = async (req, res) => {

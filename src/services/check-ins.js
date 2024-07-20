@@ -14,25 +14,44 @@ const createPaginationInformation = (page, perPage, count) => {
   };
 };
 
-export const getCheckIns = async ({ page = 1, perPage = 6 }) => {
+export const getCheckIns = async ({ page = 1, perPage = 6, filter = '' }) => {
   const skip = perPage * (page - 1);
 
-  const [checkInsCount, checkIns] = await Promise.all([
-    CheckIn.find().countDocuments(),
-    CheckIn.find({})
-      .populate('client', 'first_name middle_name last_name')
-      .populate('room', 'room_number')
-      .skip(skip)
-      .limit(perPage),
-  ]);
+  // Отримання всіх даних з поповненням
+  const allCheckIns = await CheckIn.find({})
+    .populate({
+      path: 'client',
+      select: 'first_name middle_name last_name',
+    })
+    .populate({
+      path: 'room',
+      select: 'room_number',
+    });
+
+  // Застосування фільтрації на рівні отриманих даних
+  const filteredCheckIns = filter
+    ? allCheckIns.filter(checkIn => {
+      const fullName = `${checkIn.client.first_name} ${checkIn.client.middle_name ? checkIn.client.middle_name + ' ' : ''}${checkIn.client.last_name}`.toLowerCase();
+      const firstLastName = `${checkIn.client.first_name} ${checkIn.client.last_name}`.toLowerCase();
+      const roomNumber = checkIn.room.room_number.toString();
+      console.log(fullName)
+      return fullName.includes(filter.toLowerCase()) || firstLastName.includes(filter.toLowerCase()) || roomNumber.includes(filter.toLowerCase())
+    })
+    : allCheckIns;
+
+    console.log(filter)
+
+  const paginatedCheckIns = filteredCheckIns.slice(skip, skip + perPage);
+  const checkInsCount = filteredCheckIns.length;
 
   const paginationInformation = createPaginationInformation(
     page,
     perPage,
-    checkInsCount,
+    checkInsCount
   );
+
   return {
-    checkIns,
+    checkIns: paginatedCheckIns,
     ...paginationInformation,
   };
 };
