@@ -10,7 +10,6 @@ import {
 
 // Middlewares
 import { validateBody } from '../middlewares/validateBody.js';
-import { authenticate } from '../middlewares/authenticate.js';
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
 
 // Schemas
@@ -33,6 +32,6 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+authRouter.post('/logout',  ctrlWrapper(logoutUserController));
 
-authRouter.get('/current', authenticate, ctrlWrapper(getCurrentContoller));
+authRouter.get('/current', ctrlWrapper(getCurrentContoller));
