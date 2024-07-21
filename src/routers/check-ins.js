@@ -13,6 +13,8 @@ import {
 import { ctrlWrapper } from '../middlewares/ctrlWrapper.js';
 import { validateMongoId } from '../middlewares/validateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import { authenticate } from '../middlewares/authenticate.js';
+
 
 // Schemas
 import { createCheckInSchema } from '../validation/check-ins/createCheckInSchema.js';
@@ -21,6 +23,8 @@ import { updateCheckInSchema } from '../validation/check-ins/updateCheckInSchema
 
 
 export const checkInsRouter = Router();
+
+checkInsRouter.use(authenticate);
 
 checkInsRouter.get('/', ctrlWrapper(getCheckInsController));
 
@@ -32,4 +36,3 @@ checkInsRouter.patch('/:checkInId',  validateMongoId('checkInId'), validateBody(
 
 checkInsRouter.delete( '/:checkInId', validateMongoId('checkInId'), ctrlWrapper(deleteCheckInController));
 
-// Впав деплой

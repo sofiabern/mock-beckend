@@ -18,8 +18,8 @@ import { getVisitsSchema } from '../validation/clients/getVisitsScchema.js';
 
 export const clientsRouter = Router();
 
-// clientsRouter.use(authenticate);
+clientsRouter.use(authenticate);
 
-clientsRouter.get('/', authenticate, ctrlWrapper(getClientsController));
+clientsRouter.get('/', ctrlWrapper(getClientsController));
 
 clientsRouter.post('/visits', validateBody(getVisitsSchema), ctrlWrapper(getClientVisitsController));
