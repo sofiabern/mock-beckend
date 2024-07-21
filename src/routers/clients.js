@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 // Controllers
 import {
-  getAllClientsController,
+  getClientsController,
   getClientVisitsController
 } from '../controllers/clients.js';
 
@@ -20,6 +20,6 @@ export const clientsRouter = Router();
 
 // clientsRouter.use(authenticate);
 
-clientsRouter.get('/', ctrlWrapper(getAllClientsController));
+clientsRouter.get('/', ctrlWrapper(getClientsController));
 
 clientsRouter.post('/visits', validateBody(getVisitsSchema), ctrlWrapper(getClientVisitsController));

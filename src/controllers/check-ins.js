@@ -17,8 +17,6 @@ import {
 
 import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
 
-import { parsePaginationParams } from '../utils/parsePaginationParams.js';
-
 import createHttpError from 'http-errors';
 
 

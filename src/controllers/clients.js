@@ -1,19 +1,17 @@
-
 import {
-  getAllClients,
+  getClients,
   getClientById,
   getClient,
 } from '../services/clients.js';
-// import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
-export const getAllClientsController = async (req, res) => {
-  // const { page, perPage } = parsePaginationParams(req.query);
 
-  // const clients = await getAllClients({ page, perPage });
-  const clients = await getAllClients();
+export const getClientsController = async (req, res) => {
+    const { page, perPage, filter } = req.query;
+
+  const clients = await getClients({ page, perPage, filter });
   res.json({
     status: 200,
-    message: 'Successfully got all clients!',
+    message: 'Successfully got filtered clients!',
     data: clients,
   });
 };

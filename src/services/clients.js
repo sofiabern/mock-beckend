@@ -78,29 +78,27 @@ export const getClients = async ({ page = 1, perPage = 6, filter = '' }) => {
 };
 
 
+export const getAllClients = async () => {
+  return await Client.find();
+  };
 
 
-// export const getAllClients = async () => {
-//   return await Client.find();
-//   };
-  
+export const getClientById = async (id) => {
+  return await Client.findById(id);
+};
 
-// export const getClientById = async (id) => {
-//   return await Client.findById(id);
-// };
+export const getClient = async (field) =>{
+return await Client.findOne(field);
+};
 
-// export const getClient = async (field) =>{
-// return await Client.findOne(field);
-// };
+export const createClient = async (client) => {
+  return await Client.create(client);
+};
 
-// export const createClient = async (client) => {
-//   return await Client.create(client);
-// };
+export const updateClient = async(id, field) =>{
+  return await Client.findByIdAndUpdate(id, field, { new: true });
+};
 
-// export const updateClient = async(id, field) =>{
-//   return await Client.findByIdAndUpdate(id, field, { new: true });
-// };
-
-// export const deleteClient = async(id) =>{
-//   return Client.findByIdAndDelete(id);
-// };
+export const deleteClient = async(id) =>{
+  return Client.findByIdAndDelete(id);
+};
