@@ -39,7 +39,7 @@ export const loginUser = async ({ email, password }) => {
     id
   };
 
-  const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "2m"});
+  const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "12h"});
 await User.findByIdAndUpdate(id, {token});
   return token;
 };
