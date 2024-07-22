@@ -25,6 +25,9 @@ paths:
   /clients:
     get:
       $ref: ../swagger/paths/clients/get.yaml
+  /check-ins:
+    get:
+      $ref: ../swagger/paths/check-ins/get.yaml
 components:
   securitySchemes:
     bearerAuth:

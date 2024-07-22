@@ -34,10 +34,10 @@ properties:
         example: 15
       military:
         type: number
-        example: 20
+        example: 30
       guardian:
         type: number
         example: 10
   totalDiscount:
     type: number
-    example: 45
+    example: 55

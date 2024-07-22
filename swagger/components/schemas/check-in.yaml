@@ -1,0 +1,38 @@
+type: object
+required:
+  - client
+  - room
+  - check_in_date
+  - check_out_date
+  - isCheckIn
+  - totalDayPrice
+  - totalPrice
+properties:
+  client:
+    type: string
+    format: objectId
+    example: 60b8d295f314a1a3dcd4f6f0
+  room:
+    type: string
+    format: objectId
+    example: 60b8d295f314a1a3dcd4f6f1
+  check_in_date:
+    type: string
+    format: date-time
+    example: 2024-07-01T14:00:00Z
+  check_out_date:
+    type: string
+    format: date-time
+    example: 2024-07-05T11:00:00Z
+  note:
+    type: string
+    example: "Late check-in request"
+  isCheckIn:
+    type: boolean
+    example: true
+  totalDayPrice:
+    type: number
+    example: 100
+  totalPrice:
+    type: number
+    example: 400
