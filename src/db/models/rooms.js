@@ -6,7 +6,7 @@ const roomSchema = new Schema(
   {
     room_number: { type: Number, required: true },
     capacity: { type: Number, required: true },
-    bookingsAndCheckIns:  [{ type: Schema.Types.ObjectId, ref: 'check-in' }],
+    bookingsAndCheckIns:  [{ type: Schema.Types.ObjectId, ref: 'check-in', required: true}],
     comfort_level: {
       type: String,
       enum: ['Suite', 'Junior Suite', 'Standard'],

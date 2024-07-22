@@ -7,13 +7,14 @@ const clientSchema = new Schema({
     first_name: { type: String, required: true },
     middle_name: { type: String },
     passport_details: { type: String, required: true },
-    visitsAmount: {type: Number},
+    visitsAmount: {type: Number, required: true},
     discounts: {
-      regularCustomer: { type: Number},
-      military: { type: Number},
-      guardian: { type: Number}
+      regularCustomer: { type: Number,  required: true },
+      military: { type: Number,  required: true },
+      guardian: { type: Number,  required: true },
+      required: true
     },
-    totalDiscount: { type: Number },
+    totalDiscount: { type: Number, required: true },
   },
   { timestamps: false, versionKey: false },
 );

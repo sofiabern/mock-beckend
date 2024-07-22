@@ -1,0 +1,37 @@
+type: object
+required:
+  - room_number
+  - capacity
+  - comfort_level
+  - bookingsAndCheckIns
+  - image
+  - price
+properties:
+  room_number:
+    type: integer
+    example: 101
+  capacity:
+    type: integer
+    example: 2
+  bookingsAndCheckIns:
+    type: array
+    items:
+      type: string
+      format: objectId
+    example:
+      - 668820eb293ede6b2321cdee
+      - 668820eb293ede6b2321ceee
+      - 668820eb293ede6b2321ccee
+  comfort_level:
+    type: string
+    enum:
+      - Suite
+      - Junior Suite
+      - Standard
+    example: Standard
+  image:
+    type: string
+    example: https://i.postimg.cc/KjzrmCRR/117375809.jpg
+  price:
+    type: number
+    example: 100

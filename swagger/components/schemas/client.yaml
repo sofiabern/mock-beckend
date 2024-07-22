@@ -1,0 +1,43 @@
+type: object
+required:
+  - last_name
+  - first_name
+  - passport_details
+  - visitsAmount
+  - discounts
+  - totalDiscount
+properties:
+  last_name:
+    type: string
+    example: Smith
+  first_name:
+    type: string
+    example: John
+  middle_name:
+    type: string
+    example: William
+  passport_details:
+    type: string
+    example: AB1234567
+  visitsAmount:
+    type: integer
+    example: 5
+  discounts:
+    type: object
+    required:
+      - regularCustomer
+      - military
+      - guardian
+    properties:
+      regularCustomer:
+        type: number
+        example: 15
+      military:
+        type: number
+        example: 20
+      guardian:
+        type: number
+        example: 10
+  totalDiscount:
+    type: number
+    example: 45

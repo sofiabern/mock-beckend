@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Hotel management app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: >
+    This is a documentation of Hotel management app
+tags:
+  - name: Rooms
+    description: Operations about rooms.
+  - name: Check-ins and Bookings
+    description: Operations about check-ins and bookings.
+  - name: Clients
+    description: Operations about clients.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: https://mock-beckend.onrender.com
+paths:
+  /rooms:
+    get:
+      $ref: ../swagger/paths/rooms/get.yaml
+  /clients:
+    get:
+      $ref: ../swagger/paths/clients/get.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
