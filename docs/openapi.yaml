@@ -17,7 +17,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: https://mock-beckend.onrender.com
+  - url: https://hotel-dashboard-beckend.onrender.com
 paths:
   /rooms:
     get:

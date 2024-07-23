@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://mock-beckend.onrender.com"
+      "url": "https://hotel-dashboard-beckend.onrender.com"
     }
   ],
   "tags": [
