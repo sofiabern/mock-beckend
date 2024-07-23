@@ -7,7 +7,7 @@ security:
   - bearerAuth: []
 responses:
   '200':
-    description: 'Successfully got all clients!'
+    description: 'Successfully got filtered clients!'
     content:
       application/json:
         schema:
@@ -22,10 +22,39 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully got all clients
+              example: Successfully got filtered clients!
             data:
-              type: array
-              items:
-                $ref: '../../components/schemas/client.yaml'
+              type: object
+              required:
+                - clients
+                - page
+                - perPage
+                - totalItems
+                - totalPages
+                - hasPreviousPage
+                - hasNextPage
+              properties:
+                clients:
+                  type: array
+                  items:
+                    $ref: ..\..\components\schemas\client.yaml
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 6
+                totalItems:
+                  type: integer
+                  example: 4
+                totalPages:
+                  type: integer
+                  example: 1
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+                hasNextPage:
+                  type: boolean
+                  example: false
   '401':
     $ref: '../../components/responses/401.yaml'

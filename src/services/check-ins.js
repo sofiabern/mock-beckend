@@ -33,12 +33,12 @@ export const getCheckIns = async ({ page = 1, perPage = 6, filter = '' }) => {
       const fullName = `${checkIn.client.first_name} ${checkIn.client.middle_name ? checkIn.client.middle_name + ' ' : ''}${checkIn.client.last_name}`.toLowerCase();
       const firstLastName = `${checkIn.client.first_name} ${checkIn.client.last_name}`.toLowerCase();
       const roomNumber = checkIn.room.room_number.toString();
-      console.log(fullName)
-      return fullName.includes(filter.toLowerCase()) || firstLastName.includes(filter.toLowerCase()) || roomNumber.includes(filter)
+
+      return fullName.includes(filter.toLowerCase()) || firstLastName.includes(filter.toLowerCase()) || roomNumber.includes(filter);
     })
     : allCheckIns;
 
-    console.log(filter)
+
 
   const paginatedCheckIns = filteredCheckIns.slice(skip, skip + perPage);
   const checkInsCount = filteredCheckIns.length;
@@ -53,13 +53,6 @@ export const getCheckIns = async ({ page = 1, perPage = 6, filter = '' }) => {
     checkIns: paginatedCheckIns,
     ...paginationInformation,
   };
-};
-
-export const getAllCheckIns = async () => {
-
-  return await CheckIn.find({})
-.populate('client', 'first_name middle_name last_name')
-.populate('room', 'room_number');
 };
 
 export const getCheckInById = async (id) => {

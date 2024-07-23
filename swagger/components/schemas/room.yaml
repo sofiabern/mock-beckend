@@ -3,9 +3,9 @@ required:
   - room_number
   - capacity
   - comfort_level
-  - bookingsAndCheckIns
   - image
   - price
+  - bookingsAndCheckIns
 properties:
   room_number:
     type: integer
@@ -16,12 +16,25 @@ properties:
   bookingsAndCheckIns:
     type: array
     items:
-      type: string
-      format: objectId
-    example:
-      - 668820eb293ede6b2321cdee
-      - 668820eb293ede6b2321ceee
-      - 668820eb293ede6b2321ccee
+      type: object
+      properties:
+        _id:
+          type: string
+          format: objectId
+          example: 669b85183a86f2f9e11135dc
+        check_in_date:
+          type: string
+          format: date-time
+          example: 2024-07-23T21:00:00.000Z
+        check_out_date:
+          type: string
+          format: date-time
+          example: 2024-07-25T21:00:00.000Z
+      example:
+        - _id: 669b85183a86f2f9e11135dc
+          check_in_date: 2024-07-23T21:00:00.000Z
+          check_out_date: 2024-07-25T21:00:00.000Z
+    example: []
   comfort_level:
     type: string
     enum:

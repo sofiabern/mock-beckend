@@ -25,11 +25,34 @@ paths:
   /clients:
     get:
       $ref: ../swagger/paths/clients/get.yaml
+  /clients/visits:
+    post:
+      $ref: ../swagger/paths/clients/visits/getVisits.yaml
   /check-ins:
     get:
       $ref: ../swagger/paths/check-ins/get.yaml
+    post:
+      $ref: ../swagger/paths/check-ins/post.yaml
+  /check-ins/{checkInId}:
+    patch:
+      $ref: ../swagger/paths/check-ins/{checkInId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/check-ins/{checkInId}/delete.yaml
+  /auth/signup:
+    post:
+      $ref: ../swagger/paths/auth/signup.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/current:
+    get:
+      $ref: ../swagger/paths/auth/getCurrent.yaml
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT

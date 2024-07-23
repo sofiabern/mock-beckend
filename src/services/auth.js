@@ -2,8 +2,8 @@ import createHttpError from 'http-errors';
 import { User } from '../db/models/users.js';
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
-
-const {JWT_SECRET} = process.env;
+import { env } from '../utils/env.js';
+import { ENV_VARS } from '../constants/index.js';
 
 
 export const createUser = async (payload) => {
@@ -31,7 +31,7 @@ export const loginUser = async ({ email, password }) => {
   const areEqual = await bcrypt.compare(password, user.password);
 
   if (!areEqual) {
-    throw createHttpError(401, 'Unauthorized');
+    throw createHttpError(401, 'Incorrect password');
   }
 
   const{_id: id} = user;
@@ -39,7 +39,7 @@ export const loginUser = async ({ email, password }) => {
     id
   };
 
-  const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "12h"});
+  const token = jwt.sign(payload, env(ENV_VARS.JWT_SECRET), {expiresIn: "12h"});
 await User.findByIdAndUpdate(id, {token});
   return token;
 };

@@ -1,5 +1,4 @@
 import {
-  getAllCheckIns,
   getCheckIns,
   getCheckInById,
   createCheckIn,
@@ -19,17 +18,6 @@ import { getRoomById, removeBookingFromRoom } from '../services/rooms.js';
 
 import createHttpError from 'http-errors';
 
-
-
-export const getAllCheckInsController = async (req, res) => {
-
-  const checkIns = await getAllCheckIns();
-  res.json({
-    status: 200,
-    message: 'Successfully got all check-ins!',
-    data: checkIns,
-  });
-};
 
 export const getCheckInsController = async (req, res) => {
   const { page = 1, perPage = 6, filter = '' } = req.query;
@@ -66,14 +54,14 @@ export const deleteCheckInController = async (req, res) => {
 
   const checkIn = await getCheckInById(id);
   if (!checkIn) {
-    throw createHttpError(404, 'Check-in not found');
+    throw createHttpError(500, 'Check-in not found');
   }
 
   await removeBookingFromRoom(checkIn.room, id);
 
   const client = await getClientById(checkIn.client);
   if (!client) {
-    throw createHttpError(404, 'Client not found');
+    throw createHttpError(500, 'Client not found');
   }
 
 
@@ -100,15 +88,14 @@ export const updateCheckInController = async (req, res) => {
   const checkIn = await updateCheckIn(id, updateDate);
 
   if (!checkIn) {
-    throw createHttpError(505, 'Room not found');
+    throw createHttpError(505, 'Check-in not found');
   }
 
   res.status(200).json({
     status: 200,
     message: `Successfully updated check-in with id ${id}!`,
-    data: {
+    data:
       checkIn,
-    },
   });
 };
 
@@ -155,6 +142,9 @@ const createClientAndCheckin = async ({
   };
 
   const checkIn = await createCheckIn(checkInData);
+  if (!checkIn) {
+    throw createHttpError(500, 'Failed to create check-in');
+  }
 
   await addCheckInToRoom(roomDocument, checkIn._id);
 
@@ -197,6 +187,9 @@ const createCheckin = async ({
   };
 
   const checkIn = await createCheckIn(checkInData);
+  if (!checkIn) {
+    throw createHttpError(500, 'Failed to create check-in');
+  }
 
   await addCheckInToRoom(roomDocument, checkIn._id);
 
@@ -252,7 +245,7 @@ export const createCheckInController = async (req, res) => {
       });
       return res.status(200).json({
         status: 200,
-        message: 'Client with this passport number has visited hotel',
+        message: 'Created check-in, and updated room and client',
         data: result,
       });
     } catch (error) {

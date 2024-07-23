@@ -3,7 +3,6 @@ import { Router } from 'express';
 // Conrollers
 import {
   getCheckInsController,
-  getAllCheckInsController,
   createCheckInController,
   deleteCheckInController,
   updateCheckInController
@@ -27,8 +26,6 @@ export const checkInsRouter = Router();
 checkInsRouter.use(authenticate);
 
 checkInsRouter.get('/', ctrlWrapper(getCheckInsController));
-
-checkInsRouter.get('/all', ctrlWrapper(getAllCheckInsController));
 
 checkInsRouter.post('/', validateBody(createCheckInSchema), ctrlWrapper(createCheckInController));
 

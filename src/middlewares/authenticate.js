@@ -1,8 +1,8 @@
 import createHttpError from 'http-errors';
 import jwt from 'jsonwebtoken';
 import { User } from '../db/models/users.js';
-
-const { JWT_SECRET } = process.env;
+import { env } from '../utils/env.js';
+import { ENV_VARS } from '../constants/index.js';
 
 
 export const authenticate = async (req, res, next) => {
@@ -17,9 +17,9 @@ export const authenticate = async (req, res, next) => {
   }
 
   try {
-    const { id } = jwt.verify(token, JWT_SECRET);
+    const { id } = jwt.verify(token, env(ENV_VARS.JWT_SECRET));
     const user = await User.findById(id);
-    
+
 
     if(!user || !user.token || token !== user.token){
        return next(createHttpError(401)) ;

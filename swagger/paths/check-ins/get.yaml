@@ -2,12 +2,12 @@ tags:
   - Check-ins and Bookings
 summary: Get all check-ins and bookings
 operationId: getCheckIns
-description: 'Get all check-ins and bookings'
+description: 'Get all check-ins and bookings with pagination'
 security:
   - bearerAuth: []
 responses:
   '200':
-    description: 'Successfully got all check-ins!'
+    description: 'Successfully got filtered check-ins!'
     content:
       application/json:
         schema:
@@ -22,10 +22,39 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully got all check-ins
+              example: Successfully got filtered check-ins!
             data:
-              type: array
-              items:
-                $ref: '../../components/schemas/check-in.yaml'
+              type: object
+              required:
+                - checkIns
+                - page
+                - perPage
+                - totalItems
+                - totalPages
+                - hasPreviousPage
+                - hasNextPage
+              properties:
+                checkIns:
+                  type: array
+                  items:
+                    $ref: ..\..\components\schemas\populatedCheck-in.yaml
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 6
+                totalItems:
+                  type: integer
+                  example: 4
+                totalPages:
+                  type: integer
+                  example: 1
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+                hasNextPage:
+                  type: boolean
+                  example: false
   '401':
     $ref: '../../components/responses/401.yaml'

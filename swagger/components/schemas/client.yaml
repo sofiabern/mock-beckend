@@ -9,19 +9,19 @@ required:
 properties:
   last_name:
     type: string
-    example: Smith
+    example: Grace
   first_name:
     type: string
-    example: John
+    example: Sofiia
   middle_name:
     type: string
     example: William
   passport_details:
     type: string
-    example: AB1234567
+    example: I8098763
   visitsAmount:
     type: integer
-    example: 5
+    example: 1
   discounts:
     type: object
     required:
@@ -31,13 +31,17 @@ properties:
     properties:
       regularCustomer:
         type: number
-        example: 15
+        example: 0
       military:
         type: number
-        example: 30
+        example: 0
       guardian:
         type: number
-        example: 10
+        example: 0
+      _id:
+        type: string
+        format: objectId
+        example: 669eaff3da02a808eabd6618
   totalDiscount:
     type: number
-    example: 55
+    example: 0
